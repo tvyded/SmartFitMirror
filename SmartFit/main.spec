@@ -1,12 +1,23 @@
 # -*- mode: python ; coding: utf-8 -*-
 
+import os
+
+block_cipher = None
+
+# Путь к корню проекта (где лежит main.spec)
+BASE_DIR = os.path.dirname(os.path.abspath(SPEC))
 
 a = Analysis(
     ['main.py'],
-    pathex=[],
+    pathex=[BASE_DIR],
     binaries=[],
-    datas=[],
-    hiddenimports=[],
+    datas=[
+        (os.path.join(BASE_DIR, 'assets', 'images'), 'assets/images'),
+        (os.path.join(BASE_DIR, 'assets', 'videos'), 'assets/videos'),
+    ],
+    hiddenimports=['src', 'src.app', 'src.config', 'src.exercises',
+                   'src.splash_screen', 'src.stats_panel', 'src.utils',
+                   'src.video_player'],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
@@ -21,12 +32,12 @@ exe = EXE(
     a.scripts,
     [],
     exclude_binaries=True,
-    name='main',
+    name='SmartFitMirror',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
     upx=True,
-    console=True,
+    console=False,
     disable_windowed_traceback=False,
     argv_emulation=False,
     target_arch=None,
@@ -40,5 +51,5 @@ coll = COLLECT(
     strip=False,
     upx=True,
     upx_exclude=[],
-    name='main',
+    name='SmartFitMirror',
 )
